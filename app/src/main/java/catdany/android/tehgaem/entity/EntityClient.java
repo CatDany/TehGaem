@@ -19,6 +19,7 @@ public class EntityClient {
     public double posY = 0;
     public double radius = 0;
 
+    private boolean isDead = false;
     boolean updatedThisTick = false;
 
     public EntityClient(WorldClient world, UUID id) {
@@ -27,8 +28,12 @@ public class EntityClient {
         this.id = id;
     }
 
-    public boolean remove() {
-        return world.removeEntity(this);
+    public void kill() {
+        this.isDead = true;
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 
     public void update(JSONObject json) throws JSONException {
@@ -36,5 +41,10 @@ public class EntityClient {
         this.posY = json.getDouble("PosY");
         this.radius = json.getDouble("Radius");
         this.updatedThisTick = true;
+    }
+
+    @Override
+    public String toString() {
+        return "EntityClient-" + id;
     }
 }

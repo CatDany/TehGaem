@@ -19,14 +19,9 @@ public class WorldClient {
 
     public ArrayList<EntityClient> entityList = new ArrayList<EntityClient>();
 
-    public WorldClient() {
-        //
-    }
-
     public void update(JSONObject json) throws JSONException {
         for (EntityClient i : entityList) {
             i.updatedThisTick = false;
-            LLog.v("ALL %s", i);
         }
         JSONArray jsonEntities = json.getJSONArray("Entities");
         for (int i = 0; i < jsonEntities.length(); i++) {
@@ -39,10 +34,9 @@ public class WorldClient {
             entity.update(jsonEntity);
             LLog.v("UPDATED %s", entity);
         }
-        for (EntityClient i : (ArrayList<EntityClient>)entityList.clone()) {
-            if (!i.updatedThisTick) {
-                i.remove();
-                LLog.v("REMOVED %s", i);
+        for (EntityClient i : entityList) {
+            if (!i.updatedThisTick && !i.isDead()) {
+                i.kill();
             }
         }
     }
@@ -51,8 +45,8 @@ public class WorldClient {
         entityList.add(entity);
     }
 
-    public boolean removeEntity(EntityClient entity) {
-        return entityList.remove(entity);
+    public void killEntity(EntityClient entity) {
+        entity.kill();
     }
 
     /**

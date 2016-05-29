@@ -34,9 +34,11 @@ public class GameView extends View {
         float viewHeight = getHeight();
         double coordHeight = viewHeight/viewWidth*coordWidth;
         for (EntityClient i : WorldClient.instance.entityList) {
-            LLog.v("%s Posx:%s CoordWidth:%s ViewWidth:%s >> %s", i.id, i.posX, coordWidth, viewWidth, (float)(i.posX/coordWidth*viewWidth));
-            LLog.v("%s Posy:%s CoordHeigth:%s ViewHeight:%s >> %s", i.id, i.posY, coordHeight, viewHeight, (float)(i.posY/coordHeight*viewHeight));
-            canvas.drawCircle((float)(i.posX/coordWidth*viewWidth), (float)(i.posY/coordHeight*viewHeight), (float)(i.radius/coordWidth*viewWidth), paint);
+            if (!i.isDead()) {
+                LLog.v("%s Posx:%s CoordWidth:%s ViewWidth:%s >> %s", i.id, i.posX, coordWidth, viewWidth, (float)(i.posX/coordWidth*viewWidth));
+                LLog.v("%s Posy:%s CoordHeigth:%s ViewHeight:%s >> %s", i.id, i.posY, coordHeight, viewHeight, (float)(i.posY/coordHeight*viewHeight));
+                canvas.drawCircle((float)(i.posX/coordWidth*viewWidth), (float)(i.posY/coordHeight*viewHeight), (float)(i.radius/coordWidth*viewWidth), paint);
+            }
         }
     }
 

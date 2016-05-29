@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.io.IOException;
 
 import catdany.android.tehgaem.net.TGClient;
+import catdany.android.tehgaem.net.packet.BulletPacket;
 
 public class GamePlaceholderActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,6 +36,11 @@ public class GamePlaceholderActivity extends AppCompatActivity implements View.O
                 AUtils.toastShort("I/O Error");
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        TGClient.instance.sendPacket(new BulletPacket(0, 0));
     }
 
     public static void finishOnUI() {
